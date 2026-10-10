@@ -175,23 +175,23 @@ module.exports = [
             }),
             new HtmlWebpackPlugin({
                 chunks: ['editor'], template: 'src/playground/index.ejs', filename: 'editor.html',
-                title: 'Permafy - Studio / Editor', ...htmlWebpackPluginCommon
+                title: 'Permafy - Studio', ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
                 chunks: ['editor'], template: 'src/playground/index.ejs', filename: 'editor/index.html',
-                title: 'Permafy - Studio / Editor', ...htmlWebpackPluginCommon
+                title: 'Permafy - Studio', ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
                 chunks: ['editor'], template: 'src/playground/index.ejs', filename: 'penguinmod/index.html',
-                title: 'Permafy', ...htmlWebpackPluginCommon
+                title: 'Permafy - Studio', ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
                 chunks: ['player'], template: 'src/playground/index.ejs', filename: 'featured/index.html',
-                title: 'Permafy - Featured Projects', ...htmlWebpackPluginCommon
+                title: 'Permafy - A PenguinMod Fork', ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
                 chunks: ['editor'], template: 'src/playground/index.ejs', filename: 'scratch/index.html',
-                title: 'Permafy - Editor', ...htmlWebpackPluginCommon
+                title: 'Permafy - Studio', ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
                 chunks: ['playground'], template: 'src/playground/index.ejs', filename: 'playground.html',
@@ -199,11 +199,11 @@ module.exports = [
             }),
             new HtmlWebpackPlugin({
                 chunks: ['player'], template: 'src/playground/index.ejs', filename: 'index.html',
-                title: 'Permafy - A block-based coding environment', ...htmlWebpackPluginCommon
+                title: 'Permafy - A PenguinMod Fork', ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
                 chunks: ['fullscreen'], template: 'src/playground/index.ejs', filename: 'fullscreen.html',
-                title: 'Permafy - A block-based coding environment', ...htmlWebpackPluginCommon
+                title: 'Permafy - A PenguinMod Fork', ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
                 chunks: ['embed'], template: 'src/playground/index.ejs', filename: 'embed.html',
