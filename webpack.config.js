@@ -182,20 +182,20 @@ module.exports = [
                 title: 'Permafy - Studio', ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
-                chunks: ['editor'], template: 'src/playground/index.ejs', filename: 'penguinmod/index.html',
-                title: 'Permafy - Studio', ...htmlWebpackPluginCommon
+                chunks: ['player'], template: 'src/playground/index.ejs', filename: 'penguinmod/index.html',
+                title: 'Permafy - A PenguinMod Fork', ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
                 chunks: ['player'], template: 'src/playground/index.ejs', filename: 'featured/index.html',
                 title: 'Permafy - A PenguinMod Fork', ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
-                chunks: ['editor'], template: 'src/playground/index.ejs', filename: 'scratch/index.html',
-                title: 'Permafy - Studio', ...htmlWebpackPluginCommon
+                chunks: ['player'], template: 'src/playground/index.ejs', filename: 'scratch/index.html',
+                title: 'Permafy - A PenguinMod Fork', ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
                 chunks: ['playground'], template: 'src/playground/index.ejs', filename: 'playground.html',
-                title: 'Permafy - Playground', ...htmlWebpackPluginCommon
+                title: 'Permafy - A PenguinMod Fork', ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
                 chunks: ['player'], template: 'src/playground/index.ejs', filename: 'index.html',
@@ -207,15 +207,15 @@ module.exports = [
             }),
             new HtmlWebpackPlugin({
                 chunks: ['embed'], template: 'src/playground/index.ejs', filename: 'embed.html',
-                title: 'Embedded Project - Permafy', noTheme: true, ...htmlWebpackPluginCommon
+                title: 'Permafy - A PenguinMod Fork', noTheme: true, ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
                 chunks: ['addon-settings'], template: 'src/playground/simple.ejs', filename: 'addons.html',
-                title: 'Addon Settings - Permafy', ...htmlWebpackPluginCommon
+                title: 'Permafy - A PenguinMod Fork', ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
                 chunks: ['credits'], template: 'src/playground/simple.ejs', filename: 'credits.html',
-                title: 'Permafy, PenguinMod & TurboWarp Credits', noSplash: true, ...htmlWebpackPluginCommon
+                title: 'Permafy - A PenguinMod Fork', noSplash: true, ...htmlWebpackPluginCommon
             }),
             new CopyWebpackPlugin({ patterns: [{ from: 'static', to: '' }] }),
             new CopyWebpackPlugin({ patterns: [{ from: path.resolve(__dirname, 'dashboard/public'), to: 'dashboard' }] }),

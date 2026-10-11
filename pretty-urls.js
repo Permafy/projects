@@ -30,3 +30,17 @@ for (const filename of legacyPages) {
 </html>
 `);
 }
+
+const featuredPage = path.join(buildDirectory, 'featured', 'index.html');
+const featuredAlias = path.join(buildDirectory, 'projects', 'featured');
+if (fs.existsSync(featuredPage)) {
+    fs.mkdirSync(featuredAlias, {recursive: true});
+    fs.copyFileSync(featuredPage, path.join(featuredAlias, 'index.html'));
+}
+
+fs.copyFileSync(path.join(buildDirectory, 'index.html'), path.join(buildDirectory, '404.html'));
+
+const customDomainFile = path.join(__dirname, 'CNAME');
+if (fs.existsSync(customDomainFile)) {
+    fs.copyFileSync(customDomainFile, path.join(buildDirectory, 'CNAME'));
+}

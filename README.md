@@ -12,6 +12,8 @@ hello idk
 
 [scratch-gui](https://github.com/scratchfoundation/scratch-gui) modified for use in [TurboWarp](https://turbowarp.org/) then modified for use in [PenguinMod](https://studio.penguinmod.com) and modified again for use in [Permafy](https://permafy.github.io) 😀
 
+just that this time it's just the project reproductor and catalog. other parts of the website are available on [our GitHub](https://github.com/Permafy). This repository was once called permafy.github.io...
+
 so basically:
 
 [penguinmod.github.io](https://github.com/PenguinMod/penguinmod.github.io) modified for use in [Permafy](https://permafy.github.io) 😀

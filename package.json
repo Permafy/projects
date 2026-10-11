@@ -5,8 +5,10 @@
     "main": "./dist/scratch-gui.js",
     "scripts": {
         "buildall": "npm run build && npm run deploy",
-        "build": "npm run build:dashboard && cross-env NODE_OPTIONS=\"--openssl-legacy-provider\" webpack --colors --bail && node pretty-urls.js",
+        "build": "npm run build:dashboard && cross-env ROOT=/ ROUTING_STYLE=wildcard NODE_OPTIONS=\"--openssl-legacy-provider\" webpack --colors --bail && node pretty-urls.js",
         "build:dashboard": "cross-env PAGES_BASE=/dashboard npm --prefix dashboard run build",
+        "build:studio-site": "npm run build && node scripts/prepare-studio-site.js",
+        "build:dashboard-site": "cross-env PAGES_BASE= npm --prefix dashboard run build && node scripts/prepare-dashboard-site.js",
         "clean": "rimraf ./build && mkdirp build && rimraf ./dist && mkdirp dist",
         "deploy": "gh-pages -d build",
         "prune": "./prune-gh-pages.sh",

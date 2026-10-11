@@ -190,6 +190,17 @@ class WildcardRouter extends Router {
     constructor (callbacks) {
         super(callbacks);
         this.root = process.env.ROOT;
+        const route = location.pathname.substr(this.root.length)
+            .split('/')
+            .filter(Boolean);
+        const routePrefixes = [
+            ['projects', 'featured'],
+            ['penguinmod'],
+            ['scratch']
+        ];
+        this.projectRoutePrefix = routePrefixes.find(prefix =>
+            prefix.every((part, index) => route[index] === part)
+        ) || [];
     }
 
     onhashchange () {
@@ -197,8 +208,17 @@ class WildcardRouter extends Router {
         if (hashProjectId) {
             const ok = this.onSetProjectId(hashProjectId);
             if (ok) {
-                // Completely remove the hash
-                history.replaceState(null, null, `${location.pathname}${location.search}`);
+                const route = location.pathname.substr(this.root.length)
+                    .split('/')
+                    .filter(Boolean);
+                const routeSuffix = route.slice(this.projectRoutePrefix.length);
+                const pageType = routeSuffix.find(part =>
+                    ['editor', 'playground', 'fullscreen'].includes(part)
+                );
+                const cleanRoute = this.projectRoutePrefix.concat(hashProjectId);
+                if (pageType) cleanRoute.push(pageType);
+                history.replaceState(null, null,
+                    `${this.root}${cleanRoute.join('/')}${location.search}`);
             }
         } else {
             // Do not detect page type here as it is already setup by index.html, editor.html, etc.
@@ -213,6 +233,7 @@ class WildcardRouter extends Router {
     parseURL (detectPageType) {
         const path = location.pathname.substr(this.root.length);
         const parts = path.split('/');
+        const projectIndex = this.projectRoutePrefix.length;
 
         const parseProjectId = id => {
             if (id) {
@@ -227,6 +248,7 @@ class WildcardRouter extends Router {
                 return;
             }
             if (type === 'fullscreen') {
+                this.onSetIsPlayerOnly(false);
                 this.onSetIsFullScreen(true);
             } else if (type === 'editor' || type === 'playground') {
                 if (type === 'playground') {
@@ -234,23 +256,23 @@ class WildcardRouter extends Router {
                 }
                 this.onSetIsPlayerOnly(false);
                 this.onSetIsFullScreen(false);
-            } else {
+            } else if (type) {
                 this.onSetIsPlayerOnly(true);
                 this.onSetIsFullScreen(false);
             }
         };
 
-        if (+parts[0] && Number.isFinite(+parts[0])) {
-            parseProjectId(parts[0]);
-            parsePageType(parts[1]);
+        if (+parts[projectIndex] && Number.isFinite(+parts[projectIndex])) {
+            parseProjectId(parts[projectIndex]);
+            parsePageType(parts[projectIndex + 1]);
         } else {
             this.onSetProjectId(defaultProjectId);
-            parsePageType(parts[0]);
+            parsePageType(parts[projectIndex] || parts[0]);
         }
     }
 
     generateURL ({projectId, isPlayerOnly, isFullScreen}) {
-        const parts = [];
+        const parts = this.projectRoutePrefix.slice();
 
         if (projectId !== '0') {
             parts.push(projectId);

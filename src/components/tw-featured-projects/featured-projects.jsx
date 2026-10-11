@@ -8,7 +8,7 @@ import styles from './featured-projects.css';
 import classNames from 'classnames';
 
 // i probably should change/add IDs
-// the final url will be /featured/#<ID> and that points to the project in PenguinMod
+// Featured projects use clean project paths on the Permafy host.
 // a
 // a
 // featuring: 3854350626 as beXureOS Alpha4 by itzshowkun
@@ -40,7 +40,7 @@ const getFeaturedPageUrl = () => {
     const baseUrl = normalizedRoot.startsWith('http')
         ? normalizedRoot
         : `${window.location.origin}${normalizedRoot}`;
-    return new URL('featured/', baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`).toString();
+    return new URL('projects/featured/', baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`).toString();
 };
 
 class FeaturedProjects extends React.Component {
@@ -70,8 +70,8 @@ class FeaturedProjects extends React.Component {
     }
     handleSelect(id) {
         const siteRoot = getSiteRoot();
-        const page = isFeaturedPage() ? 'featured' : this.state.source;
-        window.location.href = `${siteRoot}${page}/#${id}`;
+        const page = isFeaturedPage() ? 'projects/featured' : this.state.source;
+        window.location.href = `${siteRoot}${page}/${id}`;
     }
     handleOpenProjects() {
         this.setState({

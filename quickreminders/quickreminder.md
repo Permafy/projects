@@ -5,55 +5,23 @@ src/components/stage-header/stagecontrols/'
 old PenguinMod controls are in /controlssssssss (there are exactly 7 "s" there, just if you wondered.)
 
 # domain & title rules
-- Studio/editor pages must be titled "Permafy - Studio".
-- Dashboard/player pages must be titled "Permafy - A PenguinMod Fork".
-- Redirect: studio.permafy.org -> permafy.github.io/editor
-- Toggle script exact lines:
+- Project browser/player pages use "Permafy - A PenguinMod Fork".
+- Editor pages use "Permafy - Studio".
+- Current project site CNAME is `projects.permafy.org`.
+- Clean project URLs are `/ID`, `/ID/editor`, `/scratch/ID`, `/penguinmod/ID`, and `/projects/featured/ID`.
+- Featured listing is `/projects/featured/`.
+- GitHub Pages' 404 fallback serves the player app so the wildcard router can read clean project paths.
+- Studio editor URLs redirect from the projects host to `https://studio.permafy.org/`.
+- Domain toggle implementation is the exact current contents of `static/permafy-domain-toggle.js`.
+- Featured project loader implementation is the exact current contents of `static/permafy-featured-projects.js`.
 
-```js
-(function () {
-  const host = window.location.hostname.toLowerCase();
-  const path = window.location.pathname || '/';
-  const query = window.location.search || '';
-  const hash = window.location.hash || '';
-  const target = 'https://permafy.github.io/editor';
-
-  if (host === 'studio.permafy.org') {
-    const destination = new URL(path === '/' ? '/editor' : path, target);
-    destination.search = query;
-    destination.hash = hash;
-    window.location.replace(destination.href);
-    return;
-  }
-
-  if (host === 'permafy.github.io' && path === '/editor') {
-    document.title = 'Permafy - Studio';
-  }
-})();
-```
-
-# featured projects quick loader
-```js
-(function () {
-  const container = document.getElementById('featured-projects');
-  if (!container) return;
-
-  fetch('https://api.penguinmod.com/v1/projects/getfeaturedprojects?page=0')
-    .then(response => response.ok ? response.json() : Promise.reject(response))
-    .then(data => {
-      const projects = Array.isArray(data) ? data : (data.projects || []);
-      container.innerHTML = projects.slice(0, 6).map(project => {
-        const url = project.url || `https://permafy.github.io/?project=${project.id}`;
-        return `<a href="${url}" target="_blank" rel="noreferrer noopener">${project.title || 'Featured project'}</a>`;
-      }).join('<br>');
-    })
-    .catch(() => {
-      container.textContent = 'Featured projects unavailable';
-    });
-})();
-```
-
-# toggle rule for exact host mapping
-- studio.permafy.org = editor route
-- permafy.github.io/editor = studio route
-- dashboard/project player = "Permafy - A PenguinMod Fork"
+# Suggested repository split
+- `Permafy/projects`: player, featured projects, `/scratch/ID`, `/penguinmod/ID`; CNAME `projects.permafy.org`.
+- `Permafy/studio`: editor-only build; CNAME `studio.permafy.org`; title `Permafy - Studio`.
+- `Permafy/Permafy.github.io`: dashboard/home site at `permafy.github.io` (optional custom domain `permafy.org`).
+- Prepare the deployable folders with `npm run build:studio-site` and `npm run build:dashboard-site`; this creates `studio-site/` and `dashboard-site/`.
+- Publish the contents of `studio-site/` to `Permafy/studio` and the contents of `dashboard-site/` to `Permafy/Permafy.github.io`.
+- In each repository, enable Settings > Pages > GitHub Actions and add the matching custom domain under Settings > Pages.
+- DNS: add CNAME records for `projects` and `studio` pointing to `permafy.github.io`; add GitHub Pages A records for the apex `permafy.org` only if assigning that domain to the homepage repository.
+- The repository was renamed from `permafy.github.io` to `projects`; its default Pages URL therefore changed to `https://permafy.github.io/projects/`. The org homepage requires a separate repository named exactly `Permafy.github.io`.
+- To publish one repository's build into another repository, configure a repository-scoped fine-grained token as a GitHub Actions secret with Contents: Read and write, then deploy the relevant build output with `actions/checkout`/`actions/upload-pages-artifact` in that destination repository. Do not put the token in source files.

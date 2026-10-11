@@ -14,6 +14,8 @@ npm-*
 !build/
 !dist/
 build/*
+/studio-site
+/dashboard-site
 yarn.lock
 .webpack
 

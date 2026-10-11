@@ -1,7 +1,9 @@
 import adapter from '@sveltejs/adapter-static';
 
 const repoName = process.env.GITHUB_REPOSITORY?.split('/')?.[1];
-const pagesBase = process.env.PAGES_BASE || (process.env.GITHUB_ACTIONS && repoName ? `/${repoName}` : '');
+const pagesBase = Object.prototype.hasOwnProperty.call(process.env, 'PAGES_BASE')
+    ? process.env.PAGES_BASE
+    : (process.env.GITHUB_ACTIONS && repoName ? `/${repoName}` : '');
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {

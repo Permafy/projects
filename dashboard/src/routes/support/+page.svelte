@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-    <title>Support</title>
+    <title>Permafy - A PenguinMod Fork</title>
 </svelte:head>
 
 <main>

@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-    <title>Settings Site</title>
+    <title>Permafy - A PenguinMod Fork</title>
 </svelte:head>
 
 <main>
