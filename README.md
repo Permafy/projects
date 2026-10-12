@@ -1,38 +1,65 @@
 ## Permafy
 
-hello idk
+Permafy is a PenguinMod-style fork focused on the project player, project catalog, and editor runtime.
+
 <p align="center">
-	<img src="/title.png" />
-	<h3 align="center">
-		<a href="https://permafy.github.io">website :D</a>
-	</h3>
+  <img src="/title.png" />
+  <h3 align="center">
+    <a href="https://projects.permafy.org">Projects site</a>
+  </h3>
 </p>
 
-# Cool Info
+# Repo split
 
-[scratch-gui](https://github.com/scratchfoundation/scratch-gui) modified for use in [TurboWarp](https://turbowarp.org/) then modified for use in [PenguinMod](https://studio.penguinmod.com) and modified again for use in [Permafy](https://permafy.github.io) 😀
+This repository is the source for the project site and editor runtime used by the `projects` deployment.
 
-just that this time it's just the project reproductor and catalog. other parts of the website are available on [our GitHub](https://github.com/Permafy). This repository was once called permafy.github.io...
+We split the public site into separate GitHub Pages repos:
 
-so basically:
+- `Permafy/projects` -> main project host and project viewer, using `projects.permafy.org`
+- `Permafy/studio` -> editor-only site, using `studio.permafy.org`
+- `Permafy/home` or `Permafy/Permafy.github.io` -> dashboard/home site, using `permafy.org` or the root GitHub Pages repo
 
-[penguinmod.github.io](https://github.com/PenguinMod/penguinmod.github.io) modified for use in [Permafy](https://permafy.github.io) 😀
+This repo is not the dashboard homepage. It is the project/player/editor codebase.
 
-## Additional things
+## Source of truth
 
-If you see the [Permafy/permafy-0-2](https://github.com/Permafy/permafy-0-2) repository, you can see really big numbers like "This branch is 5625 commits ahead of and 128 commits behind Permafy/permafy.github.io:develop." and it's because i got rid of the additional 5500 commits yay :D (horrible never doing it again bruh) and that means i also had to create like 127 new blank commits but uh yeah at least it's right i just hope everythings fine on my project.
+- Source code for projects/player/editor: `Permafy/projects`
+- Source code for the dashboard/home site: separate repo, built from `dashboard-site/`
+- Source code for Studio/editor-only deployment: separate repo, built from `studio-site/`
 
+# Build outputs
 
-it's better to use Permafy on English as on other languages it just doesn't work very well and i am too lazy to fix it.
-more languages coming soon btw, working on Spanish soon
+Use these commands to generate deployable sites:
 
-have fun playing with the code! (or seeing it, it's pretty messy though)
+```bash
+npm run build
+npm run build:studio-site
+npm run build:dashboard-site
+```
+
+Then publish each directory to its own repository:
+
+```bash
+npx gh-pages -d build -r https://github.com/Permafy/projects.git -b gh-pages
+npx gh-pages -d studio-site -r https://github.com/Permafy/studio.git -b gh-pages
+npx gh-pages -d dashboard-site -r https://github.com/Permafy/home.git -b gh-pages
+```
+
+For the dashboard/home site, if you intentionally use the repo name `Permafy.github.io`, replace the remote URL with that repo and keep the same `-d dashboard-site` build output.
+
+# Important DNS / GitHub Pages notes
+
+- `projects.permafy.org` should point to the `gh-pages` branch of `Permafy/projects`
+- `studio.permafy.org` should point to the `gh-pages` branch of `Permafy/studio`
+- `permafy.org` should point to the home/dashboard repo
+
+If `projects` is already published at `permafy.org`, then that site is currently serving the dashboard output from the `gh-pages` branch of the `projects` repo. To separate things correctly, the dashboard must live in its own repo or its own deployment branch.
 
 # Setup
 
-See https://docs.turbowarp.org/development/getting-started to setup the complete TurboWarp environment.
+See https://docs.turbowarp.org/development/getting-started to set up the complete TurboWarp environment.
 
-If you just want to play with the GUI then it's the same process as upstream scratch-gui.
+If you just want to play with the GUI, the process is the same as upstream scratch-gui.
 
 # License
 
