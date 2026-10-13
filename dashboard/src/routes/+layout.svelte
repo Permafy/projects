@@ -53,6 +53,7 @@
             </a>
             <a href="https://studio.permafy.org/">create</a>
             <a href="https://docs.permafy.org/">docs</a>
+            <a href="https://projects.permafy.org/">explore</a>
             <a href="https://discord.gg/5xGRpbVrkH" target="_blank" rel="noopener noreferrer">discord</a>
         </nav>
     </header>
@@ -77,7 +78,7 @@
     }
     .site-header a {
         color: inherit;
-        font-size: 14px;
+        font-size: 16px;
         text-decoration: none;
     }
     .site-header a:hover {

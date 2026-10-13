@@ -102,7 +102,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                 });
             }
             let assetPromise;
-            const isScratchProject = /\/scratch\/?$/.test(location.pathname);
+            const isScratchProject = /(?:^|\/)scratch(?:\/|$)/i.test(location.pathname);
             // In case running in node...
             let projectUrl =
                 typeof URLSearchParams === "undefined"

@@ -39,6 +39,7 @@ if (fs.existsSync(featuredPage)) {
 }
 
 fs.copyFileSync(path.join(buildDirectory, 'index.html'), path.join(buildDirectory, '404.html'));
+fs.writeFileSync(path.join(buildDirectory, '.nojekyll'), '');
 
 const customDomainFile = path.join(__dirname, 'CNAME');
 if (fs.existsSync(customDomainFile)) {

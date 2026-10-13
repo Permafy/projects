@@ -22,7 +22,7 @@ var StudioView = function (options) {
         'https://uploads.scratch.mit.edu/projects/thumbnails/$id.png' :
         'https://projects.penguinmod.com/api/v1/projects/getproject?projectID=$id&requestType=thumbnail';
     this.projectPage = this.source === 'scratch' ?
-        'https://scratch.mit.edu/projects/$id/' :
+        'https://projects.permafy.org/scratch/$id' :
         'https://projects.permafy.org/penguinmod/$id';
     this.page = 0;
     this.seenProjectIds = {};

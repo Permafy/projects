@@ -1,8 +1,6 @@
 <script>
     import { browser } from "$app/environment";
     import { base } from "$app/paths";
-    import { PUBLIC_STUDIO_URL } from "$lib/resources/site-env";
-
     import { PenguinModAPIError } from "penguinmod";
 
     // components
@@ -350,7 +348,7 @@
                             <Project
                                 src={PenguinModClient.projects.getProjectThumbnailURL(project.id)}
                                 userSrc={PenguinModClient.users.getPfpUrl(project.author.username)}
-                                href={addPenguinModUserId(`${PUBLIC_STUDIO_URL}/#${project.id}`, $StoreSettings.loggedIn ? $StoreSession.userCachedId : "")}
+                                href={`https://projects.permafy.org/penguinmod/${project.id}`}
                                 glint={project.featured ? "featured" : null}
                                 title={project.title}
                             >
