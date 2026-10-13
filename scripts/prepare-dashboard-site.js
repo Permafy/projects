@@ -10,4 +10,3 @@ if (!fs.existsSync(path.join(sourceDirectory, 'index.html'))) {
 
 fs.rmSync(outputDirectory, {recursive: true, force: true});
 fs.cpSync(sourceDirectory, outputDirectory, {recursive: true});
-fs.writeFileSync(path.join(outputDirectory, 'CNAME'), 'permafy.org\n');

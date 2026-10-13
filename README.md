@@ -17,7 +17,7 @@ We split the public site into separate GitHub Pages repos:
 
 - `Permafy/projects` -> main project host and project viewer, using `projects.permafy.org`
 - `Permafy/studio` -> editor-only site, using `studio.permafy.org`
-- `Permafy/home` or `Permafy/Permafy.github.io` -> dashboard/home site, using `permafy.org` or the root GitHub Pages repo
+- `Permafy/permafy.github.io` -> dashboard/home site at `https://permafy.github.io`
 
 This repo is not the dashboard homepage. It is the project/player/editor codebase.
 
@@ -42,16 +42,18 @@ Then publish each directory to its own repository:
 ```bash
 npx gh-pages -d build -r https://github.com/Permafy/projects.git -b gh-pages
 npx gh-pages -d studio-site -r https://github.com/Permafy/studio.git -b gh-pages
-npx gh-pages -d dashboard-site -r https://github.com/Permafy/home.git -b gh-pages
+npx gh-pages -d dashboard-site -r https://github.com/Permafy/permafy.github.io.git -b gh-pages
 ```
 
-For the dashboard/home site, if you intentionally use the repo name `Permafy.github.io`, replace the remote URL with that repo and keep the same `-d dashboard-site` build output.
+The dashboard repo uses GitHub's default `permafy.github.io` address, so do not add a `CNAME` file to `dashboard-site/`.
 
 # Important DNS / GitHub Pages notes
 
 - `projects.permafy.org` should point to the `gh-pages` branch of `Permafy/projects`
 - `studio.permafy.org` should point to the `gh-pages` branch of `Permafy/studio`
-- `permafy.org` should point to the home/dashboard repo
+- `permafy.github.io` is served by the `Permafy/permafy.github.io` repository
+- Publish the dashboard output to the `gh-pages` branch, then change that repository's Pages source from `main` to `gh-pages` (root folder).
+- Leave the dashboard without a `CNAME` file when using the default `permafy.github.io` address.
 
 If `projects` is already published at `permafy.org`, then that site is currently serving the dashboard output from the `gh-pages` branch of the `projects` repo. To separate things correctly, the dashboard must live in its own repo or its own deployment branch.
 
