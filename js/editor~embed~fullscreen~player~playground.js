@@ -25561,9 +25561,8 @@ class Blocks extends react__WEBPACK_IMPORTED_MODULE_5___default.a.Component {
     // we actually never want the workspace to enable "refresh toolbox" - this basically re-renders the
     // entire toolbox every time we reset the workspace.  We call updateToolbox as a part of
     // componentDidUpdate so the toolbox will still correctly be updated
-    this.setToolboxRefreshEnabled = this.workspace.setToolboxRefreshEnabled.bind(this.workspace);
     this.workspace.setToolboxRefreshEnabled = value => {
-      this.setToolboxRefreshEnabled(value);
+      this.workspace.toolboxRefreshEnabled_ = value;
     };
 
     // @todo change this when blockly supports UI events
