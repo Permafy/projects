@@ -2960,7 +2960,7 @@ var StudioView = function StudioView(options) {
   this.customProjectIds = Array.isArray(options.customProjectIds) ? options.customProjectIds.slice() : null;
   this.studioApi = this.source === 'scratch' ? 'https://trampoline.turbowarp.org/proxy/studios/51930360/projects' : 'https://projects.penguinmod.com/api/v1/projects/getprojects';
   this.thumbnailSource = this.source === 'scratch' ? 'https://uploads.scratch.mit.edu/projects/thumbnails/$id.png' : 'https://projects.penguinmod.com/api/v1/projects/getproject?projectID=$id&requestType=thumbnail';
-  this.projectPage = this.source === 'scratch' ? 'https://scratch.mit.edu/projects/$id/' : 'https://projects.permafy.org/penguinmod/$id';
+  this.projectPage = this.source === 'scratch' ? 'https://projects.permafy.org/scratch/$id' : 'https://projects.permafy.org/penguinmod/$id';
   this.page = 0;
   this.seenProjectIds = {};
   this.offset = 0;
