@@ -25,7 +25,7 @@
     import StoreSettings from "$lib/stores/settings.js";
     import StoreSession from "$lib/stores/session";
 
-    import externalLinks, { addPenguinModUserId } from "$lib/resources/external-links";
+    import externalLinks from "$lib/resources/external-links";
 
     // front page project listings
     let frontPageLoading = $state(true);
@@ -77,7 +77,7 @@
                     <Button
                         icon={`${base}/asset/icons/blocks-blue.svg`}
                         kind="highlighted"
-                        href={addPenguinModUserId(externalLinks.editor, $StoreSettings.loggedIn ? $StoreSession.userCachedId : "")}
+                        href="https://studio.permafy.org/"
                         target="_blank"
                         rel="noopener noreferrer"
                         color="#8cafff"
@@ -177,7 +177,7 @@
                             <!-- Create Button -->
                             <a
                                 title="Create"
-                                href={addPenguinModUserId(externalLinks.editor, $StoreSettings.loggedIn ? $StoreSession.userCachedId : "")}
+                                href="https://studio.permafy.org/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 {@attach LocalizedTooltip("navigation.create")}
@@ -449,7 +449,7 @@
                         key="home.footer.sections.website"
                     />
                 </p>
-                <a href={addPenguinModUserId(externalLinks.editor, $StoreSettings.loggedIn ? $StoreSession.userCachedId : "")} target="_blank" rel="noopener noreferrer">
+                <a href="https://studio.permafy.org/" target="_blank" rel="noopener noreferrer">
                     <LocalizedString
                         text="Editor"
                         key="home.footer.sections.website.editor"

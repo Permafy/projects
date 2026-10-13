@@ -42,10 +42,10 @@ Then publish each directory to its own repository:
 ```bash
 npx gh-pages -d build -r https://github.com/Permafy/projects.git -b gh-pages
 npx gh-pages -d studio-site -r https://github.com/Permafy/studio.git -b gh-pages
-npx gh-pages -d dashboard-site -r https://github.com/Permafy/permafy.github.io.git -b gh-pages
+npx gh-pages -d dashboard-site --dotfiles -r https://github.com/Permafy/permafy.github.io.git -b gh-pages
 ```
 
-The dashboard repo uses GitHub's default `permafy.github.io` address, so do not add a `CNAME` file to `dashboard-site/`.
+The dashboard repo keeps `permafy.org` configured as its custom domain; every `dashboard-site/` build writes its `CNAME` so deployments preserve that connection. Its build also includes `.nojekyll` so GitHub Pages serves SvelteKit's `_app/` assets; publish with `--dotfiles` so `gh-pages` includes that file.
 
 # Important DNS / GitHub Pages notes
 

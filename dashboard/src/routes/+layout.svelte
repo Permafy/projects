@@ -1,5 +1,6 @@
 <script>
     import { browser } from "$app/environment";
+    import { base } from "$app/paths";
 
     import { PenguinModAPIError } from "penguinmod";
 
@@ -45,10 +46,56 @@
     <PenguinActionIndicator />
 {/if}
 <main>
+    <header class="site-header">
+        <nav aria-label="Primary navigation">
+            <a class="brand" href={base || "/"} aria-label="Permafy home">
+                <img src={`${base}/favicon.png`} alt="" />
+            </a>
+            <a href="https://studio.permafy.org/">create</a>
+            <a href="https://docs.permafy.org/">docs</a>
+            <a href="https://discord.gg/5xGRpbVrkH" target="_blank" rel="noopener noreferrer">discord</a>
+        </nav>
+    </header>
     {@render children()}
 </main>
 
 <style>
+    .site-header {
+        position: sticky;
+        z-index: 20;
+        top: 0;
+        height: 46px;
+        background: #91b1ff;
+        color: #fff;
+    }
+    .site-header nav {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+    }
+    .site-header a {
+        color: inherit;
+        font-size: 14px;
+        text-decoration: none;
+    }
+    .site-header a:hover {
+        text-decoration: underline;
+    }
+    .site-header .brand {
+        display: inline-flex;
+        width: 30px;
+        height: 32px;
+        align-items: center;
+        justify-content: center;
+    }
+    .site-header .brand img {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+        filter: brightness(0) invert(1);
+    }
     main {
         position: absolute;
         left: 0;
