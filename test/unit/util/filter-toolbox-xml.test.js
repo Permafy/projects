@@ -22,8 +22,8 @@ const toolboxXML = `
     </xml>
 `;
 
-const getSearchResult = (query, variables = []) => {
-    const result = filterToolboxXML(toolboxXML, query, variables, 'No blocks found');
+const getSearchResult = (query, variables = [], blockLabels = {}) => {
+    const result = filterToolboxXML(toolboxXML, query, variables, 'No blocks found', blockLabels);
     return new DOMParser().parseFromString(result, 'text/xml');
 };
 
@@ -52,6 +52,22 @@ describe('filterToolboxXML', () => {
     test('includes matching boolean and reporter blocks', () => {
         const result = getSearchResult('boolean');
         expect(getSearchCategory(result).querySelector('block[type="operator_trueBoolean"]')).not.toBeNull();
+    });
+
+    test('matches the visible localized block message', () => {
+        const result = getSearchResult('condition', [], {
+            control_repeat: 'repeat until condition is true'
+        });
+        expect(getSearchCategory(result).querySelector('block[type="control_repeat"]')).not.toBeNull();
+    });
+
+    test('matches dynamic block text in mutation metadata', () => {
+        const dynamicToolbox = toolboxXML.replace(
+            '<block type="control_repeat"/>',
+            '<block type="control_repeat"><mutation blockInfo="{&quot;text&quot;:&quot;launch rocket&quot;}"/></block>'
+        );
+        const result = filterToolboxXML(dynamicToolbox, 'launch rocket', [], 'No blocks found');
+        expect(getSearchCategory(result).querySelector('block[type="control_repeat"]')).not.toBeNull();
     });
 
     test('matches scalar variable names and creates draggable variable blocks', () => {

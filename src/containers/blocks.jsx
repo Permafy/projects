@@ -370,7 +370,8 @@ class Blocks extends React.Component {
                 this.props.toolboxXML,
                 this.state.searchQuery,
                 this.getSearchVariables(),
-                this.props.intl.formatMessage(messages.NO_SEARCH_RESULTS)
+                this.props.intl.formatMessage(messages.NO_SEARCH_RESULTS),
+                this.getBlockSearchLabels()
             );
             const searchResultsDocument = new DOMParser().parseFromString(searchResultsXML, 'text/xml');
             const searchCategory = searchResultsDocument.querySelector('category[id="searchResults"]');
@@ -649,6 +650,62 @@ class Blocks extends React.Component {
     }
     handleSearchChange (event) {
         this.setState({searchQuery: event.target.value});
+    }
+    getBlockSearchLabels () {
+        if (this._blockSearchLabels &&
+            this._blockSearchLabels.toolboxXML === this.props.toolboxXML &&
+            this._blockSearchLabels.locale === this.props.locale) {
+            return this._blockSearchLabels.labels;
+        }
+
+        const toolboxDocument = new DOMParser().parseFromString(this.props.toolboxXML, 'text/xml');
+        const blockTypes = new Set(Array.from(toolboxDocument.getElementsByTagName('block'))
+            .map(block => block.getAttribute('type'))
+            .filter(Boolean));
+        const labels = {};
+
+        blockTypes.forEach(type => {
+            const definition = this.ScratchBlocks.Blocks[type];
+            if (!definition || typeof definition.init !== 'function') return;
+
+            let blockJson;
+            let mockBlock;
+            mockBlock = new Proxy({
+                jsonInit: json => {
+                    blockJson = json;
+                }
+            }, {
+                get: (target, property) => {
+                    if (property in target) return target[property];
+                    return () => mockBlock;
+                },
+                set: (target, property, value) => {
+                    target[property] = value;
+                    return true;
+                }
+            });
+
+            try {
+                definition.init.call(mockBlock);
+            } catch (error) {
+                // Some legacy block definitions need a real workspace to initialize.
+            }
+
+            if (blockJson) {
+                labels[type] = Object.keys(blockJson)
+                    .filter(key => /^message\d+$/.test(key))
+                    .map(key => blockJson[key])
+                    .filter(value => typeof value === 'string')
+                    .join(' ');
+            }
+        });
+
+        this._blockSearchLabels = {
+            toolboxXML: this.props.toolboxXML,
+            locale: this.props.locale,
+            labels
+        };
+        return labels;
     }
     getSearchVariables () {
         const target = this.props.vm.editingTarget;

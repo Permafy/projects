@@ -91,7 +91,7 @@ const addVariableBlock = (document, category, type, variable, fieldName) => {
     category.appendChild(block);
 };
 
-const filterToolboxXML = (toolboxXML, query, variables, noResultsMessage) => {
+const filterToolboxXML = (toolboxXML, query, variables, noResultsMessage, blockLabels = {}) => {
     const normalizedQuery = normalize(query);
     const sourceDocument = new DOMParser().parseFromString(toolboxXML, 'text/xml');
     if (sourceDocument.getElementsByTagName('parsererror').length > 0) {
@@ -115,7 +115,11 @@ const filterToolboxXML = (toolboxXML, query, variables, noResultsMessage) => {
                 .filter(child => child.tagName === 'block')
                 .forEach(block => {
                     const type = block.getAttribute('type') || '';
-                    const searchableText = `${categoryName} ${type} ${block.textContent}`;
+                    const mutationText = Array.from(block.children)
+                        .filter(child => child.tagName === 'mutation')
+                        .flatMap(mutation => Array.from(mutation.attributes).map(attribute => attribute.value))
+                        .join(' ');
+                    const searchableText = `${categoryName} ${type} ${blockLabels[type] || ''} ${block.textContent} ${mutationText}`;
                     const keywordMatch = (blockKeywords[type] || [])
                         .some(keyword => normalize(keyword).includes(normalizedQuery));
                     if (normalize(searchableText).includes(normalizedQuery) || keywordMatch) {
